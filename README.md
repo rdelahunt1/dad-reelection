@@ -1,3 +1,5 @@
 # Dad's Reelection Campaign Website
 
-Source files for the campaign website, to be hosted publicly once built out.
+Campaign site for David J. De La Hunt, Hubbard County Commissioner, District 1.
+
+`index.html` is the full site (single-page, no build step). Deployed via Netlify, connected to this repo's `main` branch.
