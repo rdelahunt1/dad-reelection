@@ -1,0 +1,19 @@
+# Netlify configuration for the De La Hunt campaign site.
+# The site is plain static HTML/CSS (no build step), so there is nothing to compile.
+
+[build]
+  publish = "."
+
+# Security response headers applied to every page.
+# The site is fully self-contained: styles are inline, images are local files or
+# data: URIs, and forms post back to Netlify on the same origin — so the policy
+# below can be locked down tightly.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"

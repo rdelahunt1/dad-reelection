@@ -1,0 +1,6 @@
+# Source material for the site, not part of the site itself
+Pamphlet*.heic
+*.heic
+
+# macOS
+.DS_Store
