@@ -209,24 +209,51 @@
   .commit-list li{ display:flex; gap:0.7rem; align-items:baseline; }
   .commit-list .mark{ color:var(--red); font-weight:800; flex:none; }
 
-  /* ---------- get involved ---------- */
-  .involve-band{ background:var(--cream-dim); }
-  .involve-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-  .involve-card{
+  .family-photo{
+    margin-top:1.5rem;
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+    background:var(--cream-dim);
+  }
+  .family-photo img{
+    width:100%;
+    aspect-ratio:4/3;
+    object-fit:cover;
+  }
+  .family-photo figcaption{
+    font-family:'Segoe UI', system-ui, Arial, sans-serif;
+    font-size:0.84rem;
+    color:#4d473d;
+    padding:0.75rem 0.9rem;
+  }
+
+  .press-link{
+    display:inline-flex;
+    align-items:center;
+    gap:0.45rem;
+    font-family:'Segoe UI', system-ui, Arial, sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+    color:var(--navy);
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .press-link:hover{ text-decoration:none; }
+  .press-link.light{ color:var(--cream); }
+
+  /* ---------- vote ---------- */
+  .vote-band{ background:var(--cream-dim); }
+  .vote-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .vote-card{
     background:var(--cream); border:1px solid var(--line); border-radius:6px; padding:1.6rem;
     display:flex; flex-direction:column; gap:0.7rem;
   }
-  .involve-card h3{ font-size:1.1rem; }
-  .involve-card p{ font-family:'Segoe UI', system-ui, Arial, sans-serif; font-size:0.9rem; color:#3a352d; flex:1; }
-  .involve-card .btn{ align-self:flex-start; }
+  .vote-card h3{ font-size:1.1rem; }
+  .vote-card p, .vote-card div{ font-family:'Segoe UI', system-ui, Arial, sans-serif; font-size:0.9rem; color:#3a352d; }
+  .vote-card strong{ color:var(--navy-deep); }
+  .vote-card .btn{ align-self:flex-start; }
   .btn{ min-height:44px; line-height:1.2; }
-  .involve-form{ display:flex; flex-direction:column; gap:0.6rem; margin-top:0.3rem; }
-  .involve-form input{
-    font-family:'Segoe UI', system-ui, Arial, sans-serif; font-size:16px;
-    padding:0.65rem 0.75rem; border:1px solid var(--line); border-radius:3px; background:#fff;
-    width:100%;
-  }
-  .involve-form input:focus{ outline:2px solid var(--navy); outline-offset:1px; }
 
   footer{ background:var(--navy-deep); color:#a9b6c2; }
   footer .wrap{ padding:2.2rem 1.75rem 2.6rem; font-family:'Segoe UI', system-ui, Arial, sans-serif; font-size:0.82rem; }
@@ -242,7 +269,7 @@
     .hero-photo{ max-width:300px; margin:0 auto; }
     .hero p.dek, .hero .quote{ max-width:none; }
     .bio{ grid-template-columns:1fr; gap:2rem; }
-    .acc-grid, .involve-grid, .commit-list{ grid-template-columns:1fr; }
+    .acc-grid, .vote-grid, .commit-list{ grid-template-columns:1fr; }
     .acc-item:nth-child(-n+2){ border-top:1px solid rgba(246,241,231,0.14); }
     .acc-item:first-child{ border-top:none; }
     footer .foot-top{ flex-direction:column; }
@@ -254,7 +281,7 @@
     .cta-row .btn{ flex:1 1 auto; text-align:center; }
     .issue{ grid-template-columns:1fr; gap:0.3rem; }
     .issue .num{ font-size:0.85rem; }
-    .involve-card .btn{ align-self:stretch; text-align:center; }
+    .vote-card .btn{ align-self:stretch; text-align:center; }
   }
 </style>
 </head>
@@ -276,7 +303,7 @@
       <a href="#bio">About</a>
       <a href="#issues">Issues</a>
       <a href="#record">Record</a>
-      <a href="#involved">Get Involved</a>
+      <a href="#involved">Vote</a>
     </nav>
   </div>
 </div>
@@ -293,9 +320,10 @@
       <p class="dek">A lifelong Hubbard County resident and former business owner, fighting for fiscal responsibility and a strong voice for local communities.</p>
       <p class="quote">&ldquo;Hubbard County is a special place to live, work, raise a family, and enjoy Minnesota's great outdoors. I am seeking re-election to continue protecting our quality of life while ensuring county government remains accountable to taxpayers.&rdquo;</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#involved">Get Involved</a>
+        <a class="btn btn-primary" href="#involved">Vote for David</a>
         <a class="btn btn-ghost" href="#issues">See the Issues</a>
       </div>
+      <p style="margin-top:1rem;"><a class="press-link light" href="press-release-candidacy.html">Read the campaign announcement &rarr;</a></p>
     </div>
     <div class="hero-photo">
       <img src="Headshot.jpg" alt="David J. De La Hunt, candidate for Hubbard County Commissioner, District 1" width="640" height="800">
@@ -317,19 +345,19 @@
         <dt>Home</dt>
         <dd>Lifelong resident, Hubbard County, MN</dd>
         <dt>Education</dt>
-        <dd>B.S. Electrical Engineering, North Dakota State University (1990); licensed Professional Engineer in Minnesota</dd>
+        <dd>B.S. Electrical Engineering, North Dakota State University (1990); Licensed Professional Engineer, retired status</dd>
         <dt>Career</dt>
-        <dd>Owner, Normin Broadcasting (affiliated with the De La Hunt Media Group, founded by his father in 1962)</dd>
+        <dd>Owned and operated Normin Broadcasting Corporation for 21 years</dd>
         <dt>Prior Public Service</dt>
         <dd>10 years as Henrietta Township Supervisor, including 8 years as chairman</dd>
         <dt>Current Role</dt>
-        <dd>Hubbard County Board Chair (appointed Jan. 2026); District 1 Commissioner</dd>
+        <dd>Hubbard County Board Chair (appointed Jan. 2026); District 1 Commissioner; Heartland Lakes Development Commission, Chairman</dd>
         <dt>District 1 Covers</dt>
         <dd>City of Nevis; Lake Emma and Nevis townships; Henrietta Township and Section 36 of Todd Township (except those parts annexed to the City of Park Rapids)</dd>
         <dt>Family</dt>
         <dd>Wife Joleen (education consultant, Sourcewell); sons Ryan (Capt., U.S. Air Force) and Matthew (civil engineer)</dd>
         <dt>Community</dt>
-        <dd>Jaycees, Rotary Club, Knights of Columbus, Hubbard County Fair Board, hockey associations, St. Peter's Catholic Church</dd>
+        <dd>Jaycees, Rotary Club, Knights of Columbus, Hubbard County Fair Board, Park Rapids Hockey Association, St. Peter's Catholic Church</dd>
       </dl>
     </div>
     <div>
@@ -337,9 +365,13 @@
         <div class="label">About David</div>
         <h2>A lifelong resident, listening first.</h2>
       </div>
-      <p>David De La Hunt was born and raised in Hubbard County. Before joining the County Board, he spent 10 years as a Henrietta Township Supervisor — 8 of them as chairman — learning local government from the ground up. As an electrical engineer and licensed Professional Engineer who owns Normin Broadcasting, he brings a practical, numbers-first approach to county decisions.</p>
+      <p>David De La Hunt was born and raised in Hubbard County. Before joining the County Board, he spent 10 years as a Henrietta Township Supervisor — 8 of them as chairman — learning local government from the ground up. As an electrical engineer and Licensed Professional Engineer, retired status, who owned and operated Normin Broadcasting Corporation for 21 years, he brings a practical, numbers-first approach to county decisions.</p>
       <p>His time on the County Board has focused on listening to residents, asking tough questions, and making decisions that balance growth with responsible stewardship of taxpayer resources. He also continues to serve on the Heritage Campus Board, where he helped stabilize operations after the COVID-19 pandemic and return them to positive cash flow.</p>
       <p>Public service runs in the family: David's father, Ed De La Hunt, also served as a Hubbard County Commissioner and Henrietta Township Supervisor, and founded the family's broadcasting business back in 1962. It's a tradition of showing up for this community that David is continuing — and that his son Ryan carries forward today as a Captain in the U.S. Air Force.</p>
+      <figure class="family-photo">
+        <img src="website/IMG_9623.jpeg" alt="David and Joleen De La Hunt with family by a lake" width="640" height="480">
+        <figcaption>David and Joleen with family, rooted in the lakes and communities of Hubbard County.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -391,6 +423,7 @@
         <div>
           <h3>Fiscal Responsibility</h3>
           <p>Taxpayers deserve careful stewardship of their hard-earned dollars. David supports responsible budgeting, efficient government, and essential county services without unnecessary spending. That includes navigating the county's Health &amp; Human Services challenges by advocating strongly to prevent state cost shifts onto local taxpayers. "The purpose of a budget is to budget like you're fully staffed," David has said on the Board — pushing for long-term strategic and capital improvement planning so the county makes decisions with a multi-year view, not just a one-year budget. And as the state pushes unfunded mandates down to local governments, he's been direct about where responsibility lies: "It's not the local governments doing it to you. The screaming needs to be pointed down to St. Paul."</p>
+          <a class="press-link" href="press-release-budget.html">Read David's budget press release &rarr;</a>
         </div>
       </div>
       <div class="issue">
@@ -411,7 +444,7 @@
         <div class="num">04</div>
         <div>
           <h3>Economic Opportunity</h3>
-          <p>A strong local economy benefits everyone. David will continue supporting local businesses, tourism, agriculture, housing development, and entrepreneurship to keep Hubbard County growing and prosperous. Through the County Economic Development Authority and more than $12 million in grant funding secured over the last eight years, he has worked to bring real opportunity to the county — calling the EDA "long term, money well spent" and arguing the county would "more than get your money back" through good planning. That includes tackling housing, which local economic development discussions have called "the 500-pound gorilla" standing in the way of growth, along with support for childcare access, another major barrier keeping local employers from growing.</p>
+          <p>A strong local economy benefits everyone. David will continue supporting local businesses, tourism, agriculture, housing development, and entrepreneurship to keep Hubbard County growing and prosperous. Through the County Economic Development Authority and Heartland Lakes Development Commission, including more than $12 million in grant funding secured over the last eight years, he has worked to bring real opportunity to the county — calling the EDA "long term, money well spent" and arguing the county would "more than get your money back" through good planning. That includes tackling housing, which local economic development discussions have called "the 500-pound gorilla" standing in the way of growth, along with support for childcare access, another major barrier keeping local employers from growing.</p>
         </div>
       </div>
       <div class="issue">
@@ -432,40 +465,30 @@
   </div>
 </section>
 
-<section id="involved" class="involve-band">
+<section id="involved" class="vote-band">
   <div class="wrap">
     <div class="section-head">
-      <div class="label">Take Action</div>
-      <h2>Get involved</h2>
+      <div class="label">Vote for David</div>
+      <h2>Make your plan to vote</h2>
     </div>
-    <div class="involve-grid">
-      <div class="involve-card">
-        <h3>Request a Yard Sign</h3>
-        <p>Show your support around the neighborhood. Leave your name and address and we'll get a sign to you.</p>
-        <form class="involve-form" name="yard-sign" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
-          <input type="hidden" name="form-name" value="yard-sign">
-          <p style="display:none"><label>Leave this blank: <input name="bot-field"></label></p>
-          <input type="text" name="name" placeholder="Name" required>
-          <input type="text" name="address" placeholder="Address" required>
-          <button class="btn btn-primary" type="submit" style="margin-top:0.3rem;">Request a Sign</button>
-        </form>
+    <div class="vote-grid">
+      <div class="vote-card">
+        <h3>Election Day</h3>
+        <div><strong>Tuesday, November 3, 2026</strong></div>
+        <p>Vote in the general election for Hubbard County Commissioner, District 1.</p>
+        <a class="btn btn-primary" href="https://pollfinder.sos.state.mn.us/" target="_blank" rel="noopener noreferrer">Find Your Polling Place</a>
       </div>
-      <div class="involve-card">
-        <h3>Volunteer</h3>
-        <p>Knock doors, make calls, or help out on election day. Every hour helps a local campaign.</p>
-        <form class="involve-form" name="volunteer" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
-          <input type="hidden" name="form-name" value="volunteer">
-          <p style="display:none"><label>Leave this blank: <input name="bot-field"></label></p>
-          <input type="text" name="name" placeholder="Name" required>
-          <input type="email" name="email" placeholder="Email" required>
-          <button class="btn btn-primary" type="submit" style="margin-top:0.3rem;">Sign Up to Help</button>
-        </form>
+      <div class="vote-card">
+        <h3>Ballots Available</h3>
+        <div><strong>Friday, September 18, 2026</strong></div>
+        <p>In-person absentee ballots are available 46 days before the general election.</p>
+        <a class="btn btn-primary" href="https://www.sos.mn.gov/elections-voting/other-ways-to-vote/vote-early-in-person/" target="_blank" rel="noopener noreferrer">Early Voting Info</a>
       </div>
-      <div class="involve-card">
-        <h3>Get in Touch</h3>
-        <p>Have a question, an idea, or a concern about Hubbard County? David believes good government starts with listening — reach out directly and he'll get back to you.</p>
-        <a class="btn btn-primary" href="mailto:david@delahuntmedia.com?subject=Message%20for%20the%20Campaign">Email the Campaign</a>
-        <a class="btn btn-ghost" href="tel:+12182552864" style="border-color:var(--navy); color:var(--navy);">Call 218-255-2864</a>
+      <div class="vote-card">
+        <h3>Early Voting Starts</h3>
+        <div><strong>Friday, October 16, 2026</strong></div>
+        <p>Minnesota's Early Voting process lets voters place their ballot directly into a ballot counter before Election Day.</p>
+        <a class="btn btn-primary" href="https://mnvotes.sos.mn.gov/VoterRegistration/index" target="_blank" rel="noopener noreferrer">Register to Vote</a>
       </div>
     </div>
   </div>
