@@ -37,6 +37,7 @@
   *{box-sizing:border-box;}
   body{
     margin:0;
+    overflow-x:hidden;
     background:var(--cream);
     color:var(--ink);
     font-family: Georgia, 'Times New Roman', serif;
@@ -218,8 +219,7 @@
   }
   .family-photo img{
     width:100%;
-    aspect-ratio:4/3;
-    object-fit:cover;
+    height:auto;
   }
   .family-photo figcaption{
     font-family:'Segoe UI', system-ui, Arial, sans-serif;
@@ -282,6 +282,7 @@
     .issue{ grid-template-columns:1fr; gap:0.3rem; }
     .issue .num{ font-size:0.85rem; }
     .vote-card .btn{ align-self:stretch; text-align:center; }
+    .election-strip .wrap{ flex-direction:column; text-align:center; }
   }
 </style>
 </head>
@@ -369,7 +370,7 @@
       <p>His time on the County Board has focused on listening to residents, asking tough questions, and making decisions that balance growth with responsible stewardship of taxpayer resources. He also continues to serve on the Heritage Campus Board, where he helped stabilize operations after the COVID-19 pandemic and return them to positive cash flow.</p>
       <p>Public service runs in the family: David's father, Ed De La Hunt, also served as a Hubbard County Commissioner and Henrietta Township Supervisor, and founded the family's broadcasting business back in 1962. It's a tradition of showing up for this community that David is continuing — and that his son Ryan carries forward today as a Captain in the U.S. Air Force.</p>
       <figure class="family-photo">
-        <img src="website/IMG_9623.jpeg" alt="David and Joleen De La Hunt with family by a lake" width="640" height="480">
+        <img src="website/IMG_9623.jpeg" alt="David and Joleen De La Hunt with family by a lake">
         <figcaption>David and Joleen with family, rooted in the lakes and communities of Hubbard County.</figcaption>
       </figure>
     </div>
@@ -511,5 +512,9 @@
   </div>
 </footer>
 
+<script>
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+if(!location.hash) window.scrollTo(0,0);
+</script>
 </body>
 </html>
