@@ -2,6 +2,8 @@
 
 This is a standalone static campaign website for David J. De La Hunt, Hubbard County Commissioner, District 1.
 
+It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `AGENTS.md`/`CLAUDE.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo. Keep this file and `CLAUDE.md` in sync; mirror any durable edit into both in the same turn.
+
 ## Project Shape
 
 - Plain static HTML/CSS.
@@ -17,7 +19,7 @@ This is a standalone static campaign website for David J. De La Hunt, Hubbard Co
 - Run `git status --short` before editing.
 - Pull before meaningful work when network access is available, but do not push unless Ryan explicitly asks.
 - Keep changes small and easy to understand.
-- Explain changes in plain language; Ryan is comfortable learning but is not a professional developer.
+- Explain changes in plain language; Ryan is comfortable learning but is not a professional developer. Keep responses brief and focused — see "How to respond" in the workspace-root doc.
 - For non-trivial changes, briefly state the plan before editing.
 
 ## Agent Usage Disclosure

@@ -1,10 +1,12 @@
 # CLAUDE.md - dad-reelection
 
-This repo is a standalone project: a campaign website for Ryan's dad's reelection campaign. It is its own git repo, separate from Ryan's other projects (Home Assistant automations, PCS move tracker). Do not mix files or commits between them.
+This repo is a standalone project: a campaign website for Ryan's dad's reelection campaign. It is its own git repo, separate from Ryan's other projects. Do not mix files or commits between them.
+
+It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `CLAUDE.md`/`AGENTS.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo.
 
 ## About Ryan
 
-Active-duty USAF, not a professional developer. Favor plain-language explanations over dev jargon. Clear and a little explanatory is better than terse, but do not over-explain things he has already shown he understands.
+See "Who Ryan is" and "How to respond" in the workspace-root `CLAUDE.md` one level up. Short version: active-duty USAF, not a professional developer — favor plain-language explanations over dev jargon, keep responses brief and focused, and don't over-explain things he has already shown he understands.
 
 ## Project goal
 
