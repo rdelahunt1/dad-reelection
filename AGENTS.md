@@ -11,6 +11,8 @@ It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` o
 - Main page: `index.html`.
 - Thank-you page for Netlify forms: `thank-you.html`.
 - Deployment: Netlify, publishing the repo root via `netlify.toml`.
+- Gotchas that can break the live site live in `notes.md` - read it before adding
+  anything external; put new gotchas there, not in this file.
 - Main image asset: `Headshot.jpg`.
 
 ## Working Rules
@@ -47,7 +49,7 @@ Default to the main agent only for this repo. Use helper agents only when they w
 - Netlify forms are used for yard sign and volunteer submissions.
 - `thank-you.html` is intentionally `noindex`.
 - `robots.txt` allows the main site and disallows the thank-you page.
-- Security headers live in `netlify.toml`; update the Content Security Policy if adding external assets, scripts, fonts, analytics, or embeds.
+- Security headers live in `netlify.toml`. **Adding any external asset, script, font, analytics snippet, or embed requires a matching CSP update or it is silently blocked in the browser** - see [`notes.md`](notes.md), which also covers Netlify form gotchas.
 - Keep the site static unless Ryan explicitly asks for a framework or backend.
 
 ## Campaign Content

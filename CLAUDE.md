@@ -42,11 +42,13 @@ Default to the main agent only for this repo. Use helper agents only when they w
 - `netlify.toml` - Netlify publish config and security headers.
 - `robots.txt` - allows the main site and disallows the thank-you page.
 - `README.md` - short project summary.
+- `notes.md` - gotchas that can break the live site (CSP, Netlify forms). Read it
+  before adding anything external; put new gotchas there, not here.
 
 ## Site notes
 
 - Netlify forms are used for yard sign and volunteer submissions.
-- Security headers live in `netlify.toml`. If adding external assets, scripts, fonts, analytics, or embeds, update the Content Security Policy intentionally.
+- Security headers live in `netlify.toml`. **Adding any external asset, script, font, analytics snippet, or embed requires a matching CSP update or it is silently blocked in the browser** - see [`notes.md`](notes.md).
 - Keep the site static unless Ryan explicitly asks for a framework or backend.
 - Be careful with names, election dates, phone numbers, addresses, and campaign finance disclaimers. Do not invent factual campaign claims.
 
