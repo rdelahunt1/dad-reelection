@@ -2,4 +2,4 @@
 
 Campaign site for David J. De La Hunt, Hubbard County Commissioner, District 1.
 
-`index.html` is the full site (single-page, no build step). Deployed via Netlify, connected to this repo's `main` branch.
+`public/index.html` is the full site (single-page, no build step). Netlify deploys only the `public/` directory from this repo's `main` branch.

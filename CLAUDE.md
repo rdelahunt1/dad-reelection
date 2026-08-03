@@ -1,28 +1,29 @@
-# CLAUDE.md - dad-reelection
+# Project instructions - dad-reelection
 
-This repo is a standalone project: a campaign website for Ryan's dad's reelection campaign. It is its own git repo, separate from Ryan's other projects. Do not mix files or commits between them.
+This is a standalone static campaign website for David J. De La Hunt, Hubbard County Commissioner, District 1.
 
-It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `CLAUDE.md`/`AGENTS.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo.
+It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `AGENTS.md`/`CLAUDE.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo. Keep `AGENTS.md` and `CLAUDE.md` in sync; mirror any durable edit into both in the same turn.
 
-## About Ryan
+## Project Shape
 
-See "Who Ryan is" and "How to respond" in the workspace-root `CLAUDE.md` one level up. Short version: active-duty USAF, not a professional developer — favor plain-language explanations over dev jargon, keep responses brief and focused, and don't over-explain things he has already shown he understands.
+- Plain static HTML/CSS.
+- No build step.
+- Main page: `public/index.html`.
+- Deployment: Netlify, publishing only `public/` via `netlify.toml`.
+- Gotchas that can break the live site live in `notes.md` - read it before adding
+  anything external; put new gotchas there, not in this file.
+- Main image asset: `public/Headshot.jpg`.
 
-## Project goal
+## Working Rules
 
-Maintain and improve the live-ready campaign website for David J. De La Hunt's reelection campaign for Hubbard County Commissioner, District 1.
+- Do not mix files or commits from Ryan's other projects into this repo.
+- Run `git status --short` before editing.
+- Pull before meaningful work when network access is available, but do not push unless Ryan explicitly asks.
+- Keep changes small and easy to understand.
+- Explain changes in plain language; Ryan is comfortable learning but is not a professional developer. Keep responses brief and focused — see "How to respond" in the workspace-root doc.
+- For non-trivial changes, briefly state the plan before editing.
 
-The site is a plain static HTML/CSS site deployed through Netlify. There is no build step.
-
-## Git workflow
-
-- GitHub remote: https://github.com/rdelahunt1/dad-reelection
-- **Auto-pull at the start of a session when network access is available**: run `git pull` so we're working from the latest version. Safe to try, but do not get stuck if network/sandbox permissions block it.
-- **Never push automatically.** Only commit + push when explicitly told to.
-- **Remind Ryan to push periodically**: after meaningful chunks of work, or before wrapping up a session, ask if he wants to commit and push so changes do not sit unsynced.
-- **Plan before non-trivial changes.** For anything beyond a small fix, lay out the plan and get a quick confirm before executing.
-
-## Agent usage disclosure
+## Agent Usage Disclosure
 
 Before using helper/sub-agents, tell Ryan plainly:
 
@@ -34,27 +35,20 @@ Before using helper/sub-agents, tell Ryan plainly:
 
 Default to the main agent only for this repo. Use helper agents only when they would clearly save time or improve quality, such as parallel review of a large redesign, accessibility review plus copy review, or independent QA. If model details are not visible, say that directly instead of guessing.
 
-## Structure
+## Token Efficiency
 
-- `index.html` - full one-page campaign site with inline CSS.
-- `thank-you.html` - Netlify form thank-you page; intentionally marked `noindex`.
-- `Headshot.jpg` - candidate photo used in the hero.
-- `netlify.toml` - Netlify publish config and security headers.
-- `robots.txt` - allows the main site and disallows the thank-you page.
-- `README.md` - short project summary.
-- `notes.md` - gotchas that can break the live site (CSP, Netlify forms). Read it
-  before adding anything external; put new gotchas there, not here.
+- This repo is small. Start by reading `README.md`, `netlify.toml`, and the relevant section of `public/index.html`.
+- Use `rg` to find sections, metadata, copy, or CSS before reading whole files.
+- Do not paste or summarize the full HTML unless needed.
+- Avoid unnecessary rewrites of the full page.
+- Prefer targeted edits to existing inline CSS/HTML.
 
-## Site notes
+## Site Notes
 
-- Netlify forms are used for yard sign and volunteer submissions.
+- Only files inside `public/` belong on the live site. Keep source documents, unused assets, and project instructions outside it.
 - Security headers live in `netlify.toml`. **Adding any external asset, script, font, analytics snippet, or embed requires a matching CSP update or it is silently blocked in the browser** - see [`notes.md`](notes.md).
 - Keep the site static unless Ryan explicitly asks for a framework or backend.
-- Be careful with names, election dates, phone numbers, addresses, and campaign finance disclaimers. Do not invent factual campaign claims.
 
-## Token efficiency
+## Campaign Content
 
-- Start with `README.md`, `netlify.toml`, and the relevant section of `index.html`.
-- Use `rg` to find sections, forms, metadata, copy, or CSS before reading whole files.
-- Avoid summarizing or rewriting the full HTML unless the task truly requires it.
-- Prefer small, targeted edits that preserve the existing design and structure.
+Be careful with names, election dates, phone numbers, addresses, and campaign finance disclaimers. Do not invent factual claims. If adding public-record or election information, verify it from a reliable current source.

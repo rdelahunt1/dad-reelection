@@ -1,19 +1,18 @@
-# AGENTS.md - dad-reelection
+# Project instructions - dad-reelection
 
 This is a standalone static campaign website for David J. De La Hunt, Hubbard County Commissioner, District 1.
 
-It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `AGENTS.md`/`CLAUDE.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo. Keep this file and `CLAUDE.md` in sync; mirror any durable edit into both in the same turn.
+It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `AGENTS.md`/`CLAUDE.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo. Keep `AGENTS.md` and `CLAUDE.md` in sync; mirror any durable edit into both in the same turn.
 
 ## Project Shape
 
 - Plain static HTML/CSS.
 - No build step.
-- Main page: `index.html`.
-- Thank-you page for Netlify forms: `thank-you.html`.
-- Deployment: Netlify, publishing the repo root via `netlify.toml`.
+- Main page: `public/index.html`.
+- Deployment: Netlify, publishing only `public/` via `netlify.toml`.
 - Gotchas that can break the live site live in `notes.md` - read it before adding
   anything external; put new gotchas there, not in this file.
-- Main image asset: `Headshot.jpg`.
+- Main image asset: `public/Headshot.jpg`.
 
 ## Working Rules
 
@@ -38,18 +37,16 @@ Default to the main agent only for this repo. Use helper agents only when they w
 
 ## Token Efficiency
 
-- This repo is small. Start by reading `README.md`, `netlify.toml`, and the relevant section of `index.html`.
-- Use `rg` to find sections, forms, metadata, copy, or CSS before reading whole files.
+- This repo is small. Start by reading `README.md`, `netlify.toml`, and the relevant section of `public/index.html`.
+- Use `rg` to find sections, metadata, copy, or CSS before reading whole files.
 - Do not paste or summarize the full HTML unless needed.
 - Avoid unnecessary rewrites of the full page.
 - Prefer targeted edits to existing inline CSS/HTML.
 
 ## Site Notes
 
-- Netlify forms are used for yard sign and volunteer submissions.
-- `thank-you.html` is intentionally `noindex`.
-- `robots.txt` allows the main site and disallows the thank-you page.
-- Security headers live in `netlify.toml`. **Adding any external asset, script, font, analytics snippet, or embed requires a matching CSP update or it is silently blocked in the browser** - see [`notes.md`](notes.md), which also covers Netlify form gotchas.
+- Only files inside `public/` belong on the live site. Keep source documents, unused assets, and project instructions outside it.
+- Security headers live in `netlify.toml`. **Adding any external asset, script, font, analytics snippet, or embed requires a matching CSP update or it is silently blocked in the browser** - see [`notes.md`](notes.md).
 - Keep the site static unless Ryan explicitly asks for a framework or backend.
 
 ## Campaign Content

@@ -18,13 +18,11 @@ Update the CSP deliberately and narrowly (name the specific origin, don't widen
 to a wildcard) in the same change that adds the asset. Then verify in a browser
 console, not just by loading the page.
 
-## Netlify forms
+## Only `public/` is deployed
 
-- Yard sign and volunteer submissions go through Netlify forms.
-- `thank-you.html` is the form redirect target and is intentionally marked
-  `noindex`; `robots.txt` disallows it. Don't "fix" either — that's deliberate.
-- Renaming a form field or the form's `name` attribute silently orphans past
-  submissions in the Netlify dashboard. Check with Ryan before touching either.
+Netlify publishes only the `public/` directory. Keep project instructions, source
+documents, unused photos, and other working files outside it so they do not become
+public downloads. Any new live HTML page or asset must go inside `public/`.
 
 ## No build step
 

@@ -2,12 +2,11 @@
 # The site is plain static HTML/CSS (no build step), so there is nothing to compile.
 
 [build]
-  publish = "."
+  publish = "public"
 
 # Security response headers applied to every page.
-# The site is fully self-contained: styles are inline, images are local files or
-# data: URIs, and forms post back to Netlify on the same origin — so the policy
-# below can be locked down tightly.
+# The site is fully self-contained: styles are inline and images are local files
+# or data: URIs, so the policy below can be locked down tightly.
 [[headers]]
   for = "/*"
   [headers.values]
