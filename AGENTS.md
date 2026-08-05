@@ -1,8 +1,8 @@
-# Project instructions - dad-reelection
+# AGENTS.md - dad-reelection
 
 This is a standalone static campaign website for David J. De La Hunt, Hubbard County Commissioner, District 1.
 
-It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `AGENTS.md`/`CLAUDE.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo. Keep `AGENTS.md` and `CLAUDE.md` in sync; mirror any durable edit into both in the same turn.
+It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `AGENTS.md`/`CLAUDE.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too - this file only covers what's specific to this repo. Keep `AGENTS.md` and `CLAUDE.md` in sync; mirror any durable edit into both in the same turn.
 
 ## Project Shape
 
@@ -20,28 +20,15 @@ It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` o
 - Run `git status --short` before editing.
 - Pull before meaningful work when network access is available, but do not push unless Ryan explicitly asks.
 - Keep changes small and easy to understand.
-- Explain changes in plain language; Ryan is comfortable learning but is not a professional developer. Keep responses brief and focused — see "How to respond" in the workspace-root doc.
+- Explain changes in plain language; Ryan is comfortable learning but is not a professional developer. Keep responses brief and focused - see "How to respond" in the workspace-root doc.
 - For non-trivial changes, briefly state the plan before editing.
 
-## Agent Usage Disclosure
+## Subagents
 
-Before using helper/sub-agents, tell Ryan plainly:
-
-- Whether the work will use only the main agent or multiple agents.
-- How many helper agents will be used.
-- What each helper agent will do.
-- What model each agent will use, if the tool or environment exposes that information.
-- Why multiple agents are worth the extra token cost.
-
-Default to the main agent only for this repo. Use helper agents only when they would clearly save time or improve quality, such as parallel review of a large redesign, accessibility review plus copy review, or independent QA. If model details are not visible, say that directly instead of guessing.
-
-## Token Efficiency
-
-- This repo is small. Start by reading `README.md`, `netlify.toml`, and the relevant section of `public/index.html`.
-- Use `rg` to find sections, metadata, copy, or CSS before reading whole files.
-- Do not paste or summarize the full HTML unless needed.
-- Avoid unnecessary rewrites of the full page.
-- Prefer targeted edits to existing inline CSS/HTML.
+Default to the main agent only in this repo - it's small enough that delegation
+rarely pays. If you do use helpers (parallel review of a large redesign,
+accessibility plus copy review, independent QA), say up front how many, what each
+will do, and which model each uses.
 
 ## Site Notes
 
