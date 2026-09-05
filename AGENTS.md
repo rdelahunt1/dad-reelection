@@ -39,3 +39,13 @@ will do, and which model each uses.
 ## Campaign Content
 
 Be careful with names, election dates, phone numbers, addresses, and campaign finance disclaimers. Do not invent factual claims. If adding public-record or election information, verify it from a reliable current source.
+
+## Codex model guidance
+
+Follow the workspace root's Astra-first, Sol-secondary policy and the [Astra
+prompting guidance](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra).
+Start bounded documentation, content review, and QA with `gpt-5.6-luna` at
+`xhigh` or `max`; escalate only when the task shows a need for stronger judgment.
+Model choice does not bypass factual-content checks or the live-site boundary.
+After approved site work, verify the public-facing result; instruction-only edits
+need paired-doc and diff checks. Do not push without Ryan's explicit request.
