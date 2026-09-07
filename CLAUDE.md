@@ -1,51 +1,29 @@
-# Project instructions - dad-reelection
+# Dad Reelection
 
-This is a standalone static campaign website for David J. De La Hunt, Hubbard County Commissioner, District 1.
+Static campaign site for David J. De La Hunt, Hubbard County Commissioner,
+District 1. Keep `AGENTS.md` and `CLAUDE.md` identical.
 
-It sits one level below Ryan's cross-repo workspace root (`/Users/ryan/Coding` on the Mac), which has its own `AGENTS.md`/`CLAUDE.md` covering who Ryan is, how to respond, multi-machine setup, and shared git habits. Read those too — this file only covers what's specific to this repo. Keep `AGENTS.md` and `CLAUDE.md` in sync; mirror any durable edit into both in the same turn.
+## Project boundaries
 
-## Project Shape
+- The live site is plain HTML/CSS in `public/`; Netlify publishes that directory
+  through `netlify.toml`. Keep source documents and unused assets outside it.
+- Read `notes.md` before adding an external asset, script, font, analytics, or
+  embed. Security headers live in `netlify.toml`, and the CSP must allow every
+  intentional external request.
+- Keep the site static unless Ryan requests a framework or backend.
+- Treat names, election dates, contact information, campaign-finance disclaimers,
+  and public-record claims as facts requiring current reliable sources.
+- This is a live campaign site. Prepare and verify public-facing changes, then show
+  Ryan before changing or deploying the live site. Do not push without his explicit
+  approval.
 
-- Plain static HTML/CSS.
-- No build step.
-- Main page: `public/index.html`.
-- Deployment: Netlify, publishing only `public/` via `netlify.toml`.
-- Gotchas that can break the live site live in `notes.md` - read it before adding
-  anything external; put new gotchas there, not in this file.
-- Main image asset: `public/Headshot.jpg`.
+## Workflow
 
-## Working Rules
-
-- Do not mix files or commits from Ryan's other projects into this repo.
-- Run `git status --short` before editing.
-- Pull before meaningful work when network access is available, but do not push unless Ryan explicitly asks.
-- Keep changes small and easy to understand.
-- Explain changes in plain language; Ryan is comfortable learning but is not a professional developer. Keep responses brief and focused — see "How to respond" in the workspace-root doc.
-- For non-trivial changes, briefly state the plan before editing.
-
-## Subagents
-
-Default to the main agent only in this repo — it's small enough that delegation
-rarely pays. If you do use helpers (parallel review of a large redesign,
-accessibility plus copy review, independent QA), say up front how many, what each
-will do, and which model each uses.
-
-## Site Notes
-
-- Only files inside `public/` belong on the live site. Keep source documents, unused assets, and project instructions outside it.
-- Security headers live in `netlify.toml`. **Adding any external asset, script, font, analytics snippet, or embed requires a matching CSP update or it is silently blocked in the browser** - see [`notes.md`](notes.md).
-- Keep the site static unless Ryan explicitly asks for a framework or backend.
-
-## Campaign Content
-
-Be careful with names, election dates, phone numbers, addresses, and campaign finance disclaimers. Do not invent factual claims. If adding public-record or election information, verify it from a reliable current source.
-
-## Codex model guidance
-
-Follow the workspace root's Astra-first, Sol-secondary policy and the [Astra
-prompting guidance](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra).
-Start bounded documentation, content review, and QA with `gpt-5.6-luna` at
-`xhigh` or `max`; escalate only when the task shows a need for stronger judgment.
-Model choice does not bypass factual-content checks or the live-site boundary.
-After approved site work, verify the public-facing result; instruction-only edits
-need paired-doc and diff checks. Do not push without Ryan's explicit request.
+1. Check git status and pull only when the tree is clean.
+2. Keep changes small and preserve unrelated work.
+3. For visual or content work, verify the rendered `public/index.html`; there is no
+   build step.
+4. Use the main agent for ordinary work. Delegate a bounded review or QA task to a
+   cheaper agent only when it replaces meaningful lead-agent work.
+5. For instruction-only edits, verify the paired files and diff. For site work,
+   report what changed and what was visually checked.
