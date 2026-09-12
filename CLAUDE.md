@@ -13,9 +13,11 @@ District 1. Keep `AGENTS.md` and `CLAUDE.md` identical.
 - Keep the site static unless Ryan requests a framework or backend.
 - Treat names, election dates, contact information, campaign-finance disclaimers,
   and public-record claims as facts requiring current reliable sources.
-- This is a live campaign site. Prepare and verify public-facing changes, then show
-  Ryan before changing or deploying the live site. Do not push without his explicit
-  approval.
+- This is a live campaign site, so verify every public-facing change locally before
+  it ships: render `public/index.html` and check the section you touched. Ryan has
+  given standing approval to push to `main`, which deploys to Netlify — push without
+  asking first, then report what changed and what you verified. That approval covers
+  shipping; it does not cover inventing facts, which the rule above still governs.
 
 ## Workflow
 
