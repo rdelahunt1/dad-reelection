@@ -5,12 +5,13 @@
   publish = "public"
 
 # Security response headers applied to every page.
-# Styles are inline and images are local files or data: URIs. The candidate-forum
-# video is embedded from Facebook, so only that frame origin is allowed.
+# Styles are inline and images are local files or data: URIs. Nothing is embedded
+# in a frame — the candidate forum links out to Facebook instead of embedding it,
+# because Facebook's video plugin will not play that video for logged-out visitors.
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://www.facebook.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"

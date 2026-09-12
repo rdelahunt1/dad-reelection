@@ -164,9 +164,9 @@
 
   /* ---------- section shell ---------- */
   section{ padding:4.2rem 0; }
-  .section-head{ max-width:52ch; margin-bottom:2.6rem; }
+  .section-head{ max-width:44rem; margin-bottom:2.6rem; }
   .section-head .label{ color:var(--red); margin-bottom:0.6rem; }
-  .section-head h2{ font-size:clamp(1.7rem,2.6vw,2.2rem); }
+  .section-head h2{ font-size:clamp(1.7rem,2.6vw,2.2rem); line-height:1.2; }
   .rule{ height:1px; background:var(--line); border:none; margin:0; }
 
   /* ---------- bio ---------- */
@@ -179,7 +179,7 @@
   .bio .facts dt{ font-weight:700; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--navy); margin-top:1rem; }
   .bio .facts dt:first-child{ margin-top:0; }
   .bio .facts dd{ margin:0.2rem 0 0; font-size:0.94rem; }
-  .bio p{ font-size:1.02rem; }
+  .bio p{ font-size:1.02rem; line-height:1.7; max-width:64ch; }
 
   /* ---------- accomplishments ---------- */
   .accomplish-band{ background:var(--navy-deep); color:var(--cream); }
@@ -198,7 +198,7 @@
   .issue:first-child{ border-top:none; }
   .issue .num{ font-family:'Segoe UI', system-ui, Arial, sans-serif; font-weight:800; color:var(--red); font-size:1rem; }
   .issue h3{ font-size:1.15rem; margin-bottom:0.4rem; }
-  .issue p{ font-family:'Segoe UI', system-ui, Arial, sans-serif; font-size:0.95rem; color:#3a352d; max-width:62ch; }
+  .issue p{ font-family:'Segoe UI', system-ui, Arial, sans-serif; font-size:0.95rem; line-height:1.7; color:#3a352d; max-width:62ch; }
 
   /* ---------- commitment band ---------- */
   .commit-band{ background:var(--cream-dim); }
@@ -244,25 +244,31 @@
 
   /* ---------- candidate forum ---------- */
   .forum-band{ background:var(--cream-dim); }
-  .forum-band .section-head{ margin-bottom:1.6rem; }
-  .forum-video{
-    width:min(100%, 800px);
-    margin:0 auto;
-    aspect-ratio:560 / 314;
+  .forum-band .section-head{ margin-bottom:1.8rem; }
+  .forum-card{
+    display:flex;
+    align-items:center;
+    gap:1.5rem;
+    max-width:46rem;
+    padding:1.6rem 1.75rem;
     background:var(--navy-deep);
-    border:1px solid var(--line);
+    color:var(--cream);
     border-radius:6px;
-    overflow:hidden;
     box-shadow:0 12px 30px rgba(14,35,56,0.12);
   }
-  .forum-video iframe{ width:100%; height:100%; border:0; display:block; }
-  .forum-fallback{
-    width:min(100%, 800px);
-    margin:0.9rem auto 0;
-    font-family:'Segoe UI', system-ui, Arial, sans-serif;
-    font-size:0.9rem;
-    color:#3a352d;
+  .forum-card .play{ width:56px; height:56px; flex:none; }
+  .forum-card .forum-copy{ display:flex; flex-direction:column; gap:0.35rem; }
+  .forum-card h3{
+    font-size:1.15rem;
+    line-height:1.3;
   }
+  .forum-card p{
+    margin:0;
+    font-family:'Segoe UI', system-ui, Arial, sans-serif;
+    font-size:0.92rem;
+    color:#c5cfd9;
+  }
+  .forum-card .press-link{ color:var(--cream); margin-top:0.35rem; }
 
   /* ---------- vote ---------- */
   .vote-band{ background:var(--cream-dim); }
@@ -292,6 +298,8 @@
     .hero p.dek, .hero .quote{ max-width:none; }
     .bio{ grid-template-columns:1fr; gap:2rem; }
     .acc-grid, .vote-grid, .commit-list{ grid-template-columns:1fr; }
+    .forum-card{ flex-direction:column; align-items:flex-start; gap:1rem; padding:1.4rem; }
+    .forum-card .play{ width:44px; height:44px; }
     .acc-item:nth-child(-n+2){ border-top:1px solid rgba(246,241,231,0.14); }
     .acc-item:first-child{ border-top:none; }
     footer .foot-top{ flex-direction:column; }
@@ -341,7 +349,7 @@
       <div class="eyebrow label">Hubbard County Commissioner &bull; District 1</div>
       <h1>Experienced leadership.<span class="last">Re-elect David J. De La Hunt.</span></h1>
       <p class="dek">A lifelong Hubbard County resident and former business owner, fighting for fiscal responsibility and a strong voice for local communities.</p>
-      <p class="quote">&ldquo;Hubbard County is a special place to live, work, raise a family, and enjoy Minnesota's great outdoors. I am seeking re-election to continue protecting our quality of life while ensuring county government remains accountable to taxpayers.&rdquo;</p>
+      <p class="quote">&ldquo;Hubbard County is a special place to live, work, raise a family, and enjoy Minnesota&rsquo;s great outdoors. I am seeking re-election to continue protecting our quality of life while ensuring county government remains accountable to taxpayers.&rdquo;</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#involved">Vote for David</a>
         <a class="btn btn-ghost" href="#issues">See the Issues</a>
@@ -367,10 +375,17 @@
       <div class="label">Candidate Forum</div>
       <h2>Park Rapids League of Women Voters candidate forum</h2>
     </div>
-    <div class="forum-video">
-      <iframe src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2Feditorial.parkrapids%2Fvideos%2F2303369037146585%2F&amp;show_text=false&amp;width=560&amp;t=0" title="Park Rapids League of Women Voters candidate forum video" width="560" height="314" loading="lazy" scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+    <div class="forum-card">
+      <svg class="play" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="none" stroke="#f6f1e7" stroke-width="2" opacity="0.45"/>
+        <path d="M26 21 L45 32 L26 43 Z" fill="#a12b3a"/>
+      </svg>
+      <div class="forum-copy">
+        <h3>Watch the full forum</h3>
+        <p>The Park Rapids Enterprise recorded the forum and posted the video to its Facebook page.</p>
+        <a class="press-link" href="https://www.facebook.com/editorial.parkrapids/videos/2303369037146585/" target="_blank" rel="noopener noreferrer">Watch on Facebook &rarr;</a>
+      </div>
     </div>
-    <p class="forum-fallback">If the video does not load, <a class="press-link" href="https://www.facebook.com/editorial.parkrapids/videos/2303369037146585/" target="_blank" rel="noopener noreferrer">watch the candidate forum on Facebook &rarr;</a></p>
   </div>
 </section>
 
@@ -393,7 +408,7 @@
         <dt>Family</dt>
         <dd>Wife Joleen (education consultant, Sourcewell); sons Ryan (Capt., U.S. Air Force) and Matthew (civil engineer)</dd>
         <dt>Community</dt>
-        <dd>Jaycees, Rotary Club, Knights of Columbus, Hubbard County Fair Board, Park Rapids Hockey Association, St. Peter's Catholic Church</dd>
+        <dd>Jaycees, Rotary Club, Knights of Columbus, Hubbard County Fair Board, Park Rapids Hockey Association, St. Peter&rsquo;s Catholic Church</dd>
       </dl>
     </div>
     <div>
@@ -403,7 +418,7 @@
       </div>
       <p>David De La Hunt was born and raised in Hubbard County. Before joining the County Board, he spent 10 years as a Henrietta Township Supervisor — 8 of them as chairman — learning local government from the ground up. As an electrical engineer and Licensed Professional Engineer, retired status, who owned and operated Normin Broadcasting Corporation for 21 years, he brings a practical, numbers-first approach to county decisions.</p>
       <p>His time on the County Board has focused on listening to residents, asking tough questions, and making decisions that balance growth with responsible stewardship of taxpayer resources. He also continues to serve on the Heritage Campus Board, where he helped stabilize operations after the COVID-19 pandemic and return them to positive cash flow.</p>
-      <p>Public service runs in the family: David's father, Ed De La Hunt, also served as a Hubbard County Commissioner and Henrietta Township Supervisor, and founded the family's broadcasting business back in 1962. It's a tradition of showing up for this community that David is continuing — and that his son Ryan carries forward today as a Captain in the U.S. Air Force.</p>
+      <p>Public service runs in the family: David&rsquo;s father, Ed De La Hunt, also served as a Hubbard County Commissioner and Henrietta Township Supervisor, and founded the family&rsquo;s broadcasting business back in 1962. It&rsquo;s a tradition of showing up for this community that David is continuing — and that his son Ryan carries forward today as a Captain in the U.S. Air Force.</p>
       <figure class="family-photo">
         <img src="website/IMG_9623.jpeg" alt="David and Joleen De La Hunt with family by a lake">
         <figcaption>David and Joleen with family, rooted in the lakes and communities of Hubbard County.</figcaption>
@@ -416,7 +431,7 @@
   <div class="wrap">
     <div class="section-head">
       <div class="label">The Record</div>
-      <h2>What we've accomplished together</h2>
+      <h2>What we&rsquo;ve accomplished together</h2>
     </div>
     <div class="acc-grid">
       <div class="acc-item"><span class="mark">&#9654;</span> Helped lead the transition to a more professionally managed county — adopting an administrative model, a comprehensive Strategic Plan, and a long-term Capital Improvement Plan</div>
@@ -459,15 +474,15 @@
         <div class="num">01</div>
         <div>
           <h3>Fiscal Responsibility</h3>
-          <p>Taxpayers deserve careful stewardship of their hard-earned dollars. David supports responsible budgeting, efficient government, and essential county services without unnecessary spending. That includes navigating the county's Health &amp; Human Services challenges by advocating strongly to prevent state cost shifts onto local taxpayers. "The purpose of a budget is to budget like you're fully staffed," David has said on the Board — pushing for long-term strategic and capital improvement planning so the county makes decisions with a multi-year view, not just a one-year budget. And as the state pushes unfunded mandates down to local governments, he's been direct about where responsibility lies: "It's not the local governments doing it to you. The screaming needs to be pointed down to St. Paul."</p>
-          <a class="press-link" href="press-release-budget.html">Read David's budget press release &rarr;</a>
+          <p>Taxpayers deserve careful stewardship of their hard-earned dollars. David supports responsible budgeting, efficient government, and essential county services without unnecessary spending. That includes navigating the county&rsquo;s Health &amp; Human Services challenges by advocating strongly to prevent state cost shifts onto local taxpayers. &ldquo;The purpose of a budget is to budget like you&rsquo;re fully staffed,&rdquo; David has said on the Board — pushing for long-term strategic and capital improvement planning so the county makes decisions with a multi-year view, not just a one-year budget. And as the state pushes unfunded mandates down to local governments, he&rsquo;s been direct about where responsibility lies: &ldquo;It&rsquo;s not the local governments doing it to you. The screaming needs to be pointed down to St. Paul.&rdquo;</p>
+          <a class="press-link" href="press-release-budget.html">Read David&rsquo;s budget press release &rarr;</a>
         </div>
       </div>
       <div class="issue">
         <div class="num">02</div>
         <div>
           <h3>Public Safety</h3>
-          <p>Keeping our communities safe is a core responsibility of county government. David will continue to strongly support the sheriff's office, emergency responders, and public safety personnel — while working with the new Sheriff to reduce and slow the growth of public safety spending. He helped create the Walker Ambulance District so coverage keeps pace with a growing county, and serves on the Association of Minnesota Counties' Public Safety Policy Committee, giving Hubbard County a voice in how public safety policy gets shaped at the state level.</p>
+          <p>Keeping our communities safe is a core responsibility of county government. David will continue to strongly support the sheriff&rsquo;s office, emergency responders, and public safety personnel — while working with the new Sheriff to reduce and slow the growth of public safety spending. He helped create the Walker Ambulance District so coverage keeps pace with a growing county, and serves on the Association of Minnesota Counties&rsquo; Public Safety Policy Committee, giving Hubbard County a voice in how public safety policy gets shaped at the state level.</p>
         </div>
       </div>
       <div class="issue">
@@ -481,14 +496,14 @@
         <div class="num">04</div>
         <div>
           <h3>Economic Opportunity</h3>
-          <p>A strong local economy benefits everyone. David will continue supporting local businesses, tourism, agriculture, housing development, and entrepreneurship to keep Hubbard County growing and prosperous. Through the County Economic Development Authority and Heartland Lakes Development Commission, including more than $12 million in grant funding secured over the last eight years, he has worked to bring real opportunity to the county — calling the EDA "long term, money well spent" and arguing the county would "more than get your money back" through good planning. That includes tackling housing, which local economic development discussions have called "the 500-pound gorilla" standing in the way of growth, along with support for childcare access, another major barrier keeping local employers from growing.</p>
+          <p>A strong local economy benefits everyone. David will continue supporting local businesses, tourism, agriculture, housing development, and entrepreneurship to keep Hubbard County growing and prosperous. Through the County Economic Development Authority and Heartland Lakes Development Commission, including more than $12 million in grant funding secured over the last eight years, he has worked to bring real opportunity to the county — calling the EDA &ldquo;long term, money well spent&rdquo; and arguing the county would &ldquo;more than get your money back&rdquo; through good planning. That includes tackling housing, which local economic development discussions have called &ldquo;the 500-pound gorilla&rdquo; standing in the way of growth, along with support for childcare access, another major barrier keeping local employers from growing.</p>
         </div>
       </div>
       <div class="issue">
         <div class="num">05</div>
         <div>
           <h3>Protecting Our Way of Life</h3>
-          <p>Hubbard County's lakes, forests, parks, and rural character make this a special place to live and raise a family. David will work to preserve these assets while supporting responsible growth and development. As board chair, he led the effort to develop balanced short-term rental regulations, saying plainly the goal was "to protect all lake property owners" — not to punish anyone. He's also backed the Deep Lake Park development, working directly with state legislators on funding for its next phase — proof that growth and conservation don't have to be at odds. And he's pushed the DNR to keep our seasonal economy in mind: "We lost our fishing derby. You take our snowmobile race away, or if we have a winter where there's no snow or ice, it's devastating," he told the agency in 2026 — a reminder that in Hubbard County, protecting the outdoors and protecting local livelihoods go hand in hand.</p>
+          <p>Hubbard County&rsquo;s lakes, forests, parks, and rural character make this a special place to live and raise a family. David will work to preserve these assets while supporting responsible growth and development. As board chair, he led the effort to develop balanced short-term rental regulations, saying plainly the goal was &ldquo;to protect all lake property owners&rdquo; — not to punish anyone. He&rsquo;s also backed the Deep Lake Park development, working directly with state legislators on funding for its next phase — proof that growth and conservation don&rsquo;t have to be at odds. And he&rsquo;s pushed the DNR to keep our seasonal economy in mind: &ldquo;We lost our fishing derby. You take our snowmobile race away, or if we have a winter where there&rsquo;s no snow or ice, it&rsquo;s devastating,&rdquo; he told the agency in 2026 — a reminder that in Hubbard County, protecting the outdoors and protecting local livelihoods go hand in hand.</p>
         </div>
       </div>
       <div class="issue">
@@ -524,7 +539,7 @@
       <div class="vote-card">
         <h3>Early Voting Starts</h3>
         <div><strong>Friday, October 16, 2026</strong></div>
-        <p>Minnesota's Early Voting process lets voters place their ballot directly into a ballot counter before Election Day.</p>
+        <p>Minnesota&rsquo;s Early Voting process lets voters place their ballot directly into a ballot counter before Election Day.</p>
         <a class="btn btn-primary" href="https://mnvotes.sos.mn.gov/VoterRegistration/index" target="_blank" rel="noopener noreferrer">Register to Vote</a>
       </div>
     </div>
