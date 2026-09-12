@@ -18,6 +18,28 @@ Update the CSP deliberately and narrowly (name the specific origin, don't widen
 to a wildcard) in the same change that adds the asset. Then verify in a browser
 console, not just by loading the page.
 
+## Facebook Live/Reels videos cannot be embedded
+
+The candidate forum video was embedded with `plugins/video.php` and showed
+"Video Unavailable" to every logged-out visitor, even though the video itself
+plays fine on Facebook. The post is a Live/Reels video, and the plugin will not
+serve those. All four href formats were tested — `/videos/<id>/`, `/watch/?v=`,
+`/reel/<id>`, and `video.php?v=` — and every one fails identically, so there is
+no embed URL that fixes it. The section now links out to Facebook instead
+(2026-09-11). Don't re-add the iframe; if a future video needs embedding, test
+the plugin URL logged out first.
+
+This is also why the CSP carries `frame-src 'none'` — restore a specific frame
+origin only if something is genuinely framed again.
+
+## Verify the live site logged out, in a real browser
+
+Two traps caught this one. A browser logged into Facebook may render an embed
+that is broken for the public, so check in a clean/private session. And the
+built-in Browser pane returns blank screenshots while the pane is hidden — the
+page isn't rendered — so a headless Playwright script is the reliable way to
+screenshot a section.
+
 ## Only `public/` is deployed
 
 Netlify publishes only the `public/` directory. Keep project instructions, source
