@@ -1,7 +1,7 @@
 # Dad Reelection
 
 Static campaign site for David J. De La Hunt, Hubbard County Commissioner,
-District 1. Keep `AGENTS.md` and `CLAUDE.md` identical.
+District 1. Use `AGENTS.md` as the sole shared instruction file.
 
 ## Project boundaries
 
