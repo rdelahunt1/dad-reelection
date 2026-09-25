@@ -1,7 +1,7 @@
 # Dad Reelection
 
 Static campaign site for David J. De La Hunt, Hubbard County Commissioner,
-District 1. Use `AGENTS.md` as the sole shared instruction file.
+District 1.
 
 ## Project boundaries
 
@@ -25,7 +25,4 @@ District 1. Use `AGENTS.md` as the sole shared instruction file.
 2. Keep changes small and preserve unrelated work.
 3. For visual or content work, verify the rendered `public/index.html`; there is no
    build step.
-4. Use the main agent for ordinary work. Delegate a bounded review or QA task to a
-   cheaper agent only when it replaces meaningful lead-agent work.
-5. For instruction-only edits, verify the paired files and diff. For site work,
-   report what changed and what was visually checked.
+4. Report what changed and what was visually checked.
