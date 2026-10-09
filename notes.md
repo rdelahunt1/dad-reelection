@@ -40,6 +40,11 @@ built-in Browser pane returns blank screenshots while the pane is hidden — the
 page isn't rendered — so a headless Playwright script is the reliable way to
 screenshot a section.
 
+On 2026-10-09, the October tax-base release was published and verified live.
+Netlify rewrote its homepage link from `press-release-tax-base.html` to
+`/press-release-tax-base`. Live browser checks must accept the clean URL;
+an exact `.html` selector can falsely report that the deployment is missing.
+
 ## Only `public/` is deployed
 
 Netlify publishes only the `public/` directory. Keep project instructions, source
