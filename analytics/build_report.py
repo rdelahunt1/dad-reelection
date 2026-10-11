@@ -141,6 +141,15 @@ def validate(raw):
         problems.append("no daily history")
     if not raw["week"]["pages"]:
         problems.append("no page rankings")
+    wk = raw["week"]
+    first = date.fromisoformat(wk["from"])
+    week_days = {(first + timedelta(i)).isoformat() for i in range(7)}
+    daily_sum = sum(n for k, n in raw["history_pageviews"] if k in week_days)
+    if daily_sum != wk["pageviews"]:
+        problems.append(f"daily pageviews sum {daily_sum} != week total {wk['pageviews']}")
+    page_sum = sum(p["count"] for p in wk["pages"])
+    if abs(page_sum - wk["pageviews"]) > 2:
+        problems.append(f"page counts sum {page_sum} != week total {wk['pageviews']}")
     if problems:
         sys.exit("DATA CHECK FAILED: " + "; ".join(problems))
 
@@ -151,21 +160,23 @@ def d(iso):
     return date.fromisoformat(iso)
 
 
-def bars(points, height, width=680, label_every=1, accent_last=False):
+def bars(points, height, width=680, label_every=1, small=False):
     """points: [(label, value, emphasized)]"""
     n = len(points)
     top = max([v for _, v, _ in points] + [1])
-    slot = width / n
-    bw = min(54, slot * 0.64)
+    pad = 18 if small else 0
+    slot = (width - 2 * pad) / n
+    bw = min(54, slot * (0.75 if small else 0.64))
     s = [f'<svg viewBox="0 0 {width} {height + 34}" width="100%" role="img">',
          f'<line x1="0" y1="{height}" x2="{width}" y2="{height}" stroke="#cfc8b9"/>']
     for i, (lab, v, emph) in enumerate(points):
         h = max(2, v / top * (height - 22))
-        x = i * slot + (slot - bw) / 2
+        x = pad + i * slot + (slot - bw) / 2
         fill = RED if emph else NAVY
         s.append(f'<rect x="{x:.1f}" y="{height - h:.1f}" width="{bw:.1f}" height="{h:.1f}" rx="3" fill="{fill}"/>')
-        s.append(f'<text x="{x + bw / 2:.1f}" y="{height - h - 6:.1f}" text-anchor="middle" font-size="11" fill="{INK}">{v:,}</text>')
-        if i % label_every == 0 or i == n - 1:
+        if not small:
+            s.append(f'<text x="{x + bw / 2:.1f}" y="{height - h - 6:.1f}" text-anchor="middle" font-size="11" fill="{INK}">{v:,}</text>')
+        if (small and emph) or (not small and (i % label_every == 0 or i == n - 1)):
             s.append(f'<text x="{x + bw / 2:.1f}" y="{height + 17}" text-anchor="middle" font-size="9.5" '
                      f'letter-spacing=".04em" fill="{MUTED}">{html.escape(lab)}</text>')
     s.append("</svg>")
@@ -181,7 +192,55 @@ def change(p, prev=None):
     return f'<span class="{cls}">{arrow} {abs(p)}%</span>{tail}'
 
 
-def render(raw, days, f, takeaways):
+def page_history(files):
+    """{week_start_iso: {page_label: pageviews}} from every capture's week and prev_week."""
+    out = {}
+    for fpath in files:
+        raw = json.loads(fpath.read_text())
+        for key in ("prev_week", "week"):
+            out[raw[key]["from"]] = group(raw[key]["pages"], page_label)
+    return dict(sorted(out.items()))
+
+
+def appendix(days, files, wk_from):
+    weeks = weekly_totals(days)[-16:]
+    week_vis = {}
+    for fpath in files:
+        r = json.loads(fpath.read_text())
+        for key in ("prev_week", "week"):
+            week_vis[r[key]["from"]] = r[key]["visitors"]
+    rows, prev = [], None
+    for s, pv, vis in weeks:
+        keys = [(s + timedelta(i)).isoformat() for i in range(7)]
+        busiest = max(keys, key=lambda k: days[k]["pageviews"])
+        mark = ' class="cur"' if s.isoformat() == wk_from else ""
+        rows.append(f'<tr{mark}><td>{s:%b %-d} – {s + timedelta(6):%b %-d}</td><td class="n">{pv:,}</td>'
+                    f'<td class="n">{f"{week_vis[s.isoformat()]:,}" if s.isoformat() in week_vis else "–"}</td><td class="c">{change(pct(pv, prev)) if prev else ""}</td>'
+                    f'<td class="c">{d(busiest):%a %b %-d} ({days[busiest]["pageviews"]})</td></tr>')
+        prev = pv
+    keys = sorted(days)[-84:]
+    daily = [(d(k).strftime("%b %-d").upper(), days[k]["pageviews"], d(k).weekday() == 6) for k in keys]
+    chart = bars(daily, 90, label_every=7, small=True)
+
+    ph = page_history(files)
+    cols = list(ph)[-6:]
+    labels = sorted({l for c in cols for l in ph[c]}, key=lambda l: -sum(ph[c].get(l, 0) for c in cols))
+    head = "".join(f'<th class="n">{d(c):%b %-d}</th>' for c in cols)
+    body = "".join(f'<tr><td>{html.escape(l)}</td>' + "".join(f'<td class="n">{ph[c].get(l, 0) or "–"}</td>' for c in cols) + "</tr>"
+                   for l in labels)
+    return f"""
+<div class="appendix">
+<div class="ref"><div class="tag">EXTRA DETAIL · OPTIONAL READING</div><b>You can stop here.</b> Everything you need is on page 1. The pages below are the full
+traffic history, kept here in case you ever want to dig into the details. Feel free to skip them.</div>
+<section><div class="h"><h2>Every day on record</h2><span>Pageviews per day, last {len(keys)} days · red bars = Sundays (labeled)</span></div>{chart}</section>
+<section><div class="h"><h2>Week by week</h2><span>Sun–Sat weeks · highlighted = this report · visitors shown for weeks captured since reports began</span></div>
+<table class="small"><tr><th>Week</th><th class="n">Pageviews</th><th class="n">Visitors</th><th class="c">Change</th><th class="c">Busiest day</th></tr>{"".join(reversed(rows))}</table></section>
+<section><div class="h"><h2>Pages read, by week</h2><span>Pageviews · column = week starting · weeks captured since reports began</span></div>
+<table class="small"><tr><th>Page</th>{head}</tr>{body}</table></section>
+</div>"""
+
+
+def render(raw, days, f, takeaways, files):
     wk = raw["week"]
     cap = raw["_id"]
     wfrom, wto = d(wk["from"]), d(wk["to"])
@@ -241,6 +300,15 @@ td.p {{ text-align: right; width: 38px; color: {MUTED}; font-size: 9.5px; }}
 td.c {{ text-align: right; width: 64px; font-size: 9.5px; color: {MUTED}; }}
 .up {{ color: {GREEN}; }} .down {{ color: {RED}; }} .flat {{ color: {MUTED}; }}
 .kpi .s .up, .kpi .s .down {{ font-weight: 600; }}
+.appendix {{ break-before: page; padding: 26px 40px 0; font-size: 9.5px; }}
+.ref {{ background: {CREAM}; border: 1px dashed #b9b1a0; border-radius: 6px; padding: 10px 14px; color: {MUTED}; font-size: 10.5px; line-height: 1.45; }}
+.ref b {{ color: {INK}; }}
+.ref .tag {{ font-size: 8.5px; letter-spacing: .12em; font-weight: 700; color: {RED}; margin-bottom: 3px; }}
+table.small td, table.small th {{ padding: 3px 0; font-size: 9.5px; }}
+table.small th {{ text-align: left; font-weight: 600; color: {MUTED}; border-bottom: 1px solid {RULE}; }}
+table.small th.n, table.small th.c {{ text-align: right; }}
+table.small td.c {{ width: auto; }}
+tr.cur td {{ background: #fbf3e6; font-weight: 600; }}
 .foot {{ margin: 14px 40px 0; border-top: 1px solid {RULE}; padding-top: 7px; font-size: 8.5px; color: {MUTED}; line-height: 1.5; }}
 </style></head><body>
 <header><div class="k"><span>CAMPAIGN WEBSITE · WEEKLY REPORT</span><span>{wfrom:%b %-d} – {wto:%b %-d, %Y}</span></div>
@@ -264,20 +332,19 @@ td.c {{ text-align: right; width: 64px; font-size: 9.5px; color: {MUTED}; }}
 "Direct / unattributed" covers typed addresses, bookmarks, texts, emails, and apps that hide the link source.
 Both URL forms of each page are combined. {f['us_share_pct']}% of this week's pageviews came from the United States; the rest came from other countries.
 <br>Source: Netlify Web Analytics, captured {d(cap):%b %-d, %Y}. Prepared automatically each Sunday.</div>
+{appendix(days, files, wk["from"])}
 </body></html>"""
 
 
-def email_html(raw, f, takeaways):
+def email_text(raw, f, takeaways):
     wk = raw["week"]
-    items = "".join(f"<li style=\"margin:0 0 8px\"><b>{html.escape(t['title'])}</b> {html.escape(t['detail'])}</li>" for t in takeaways)
     p = f["pageviews_change_pct"]
     trend = "" if p is None else f" ({'up' if p >= 0 else 'down'} {abs(p)}% from the week before)"
-    return (f'<div style="font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2533;max-width:560px">'
-            f'<p>Hi Dad,</p><p>Here is the campaign website report for {d(wk["from"]):%b %-d} – {d(wk["to"]):%b %-d}: '
-            f'<b>{f["pageviews"]:,} pageviews</b> from <b>{f["visitors"]:,} visitors</b>{trend}.</p>'
-            f'<p style="margin-bottom:6px"><b>Big takeaways</b></p><ol style="padding-left:20px;margin-top:0">{items}</ol>'
-            f'<p>The full one-page report is attached.</p><p>Ryan</p>'
-            f'<p style="font-size:12px;color:#647083">Sent automatically every Sunday from Netlify Web Analytics for delahuntforcommissioner.com.</p></div>')
+    items = "\n\n".join(f"{i}. {t['title']} {t['detail']}" for i, t in enumerate(takeaways, 1))
+    return (f"Hi Dad,\n\nHere is the campaign website report for {d(wk['from']):%b %-d} – {d(wk['to']):%b %-d}: "
+            f"{f['pageviews']:,} pageviews from {f['visitors']:,} visitors{trend}.\n\nBig takeaways\n\n{items}\n\n"
+            "The full report is attached.\n\nRyan\n\n"
+            "(Sent automatically every Sunday from Netlify Web Analytics for delahuntforcommissioner.com.)\n")
 
 
 def main():
@@ -295,14 +362,14 @@ def main():
     REPORTS.mkdir(exist_ok=True)
     name = f"traffic-summary-{raw['week']['from']}-to-{raw['week']['to']}"
     html_path, pdf_path = REPORTS / f"{name}.html", REPORTS / f"{name}.pdf"
-    html_path.write_text(render(raw, days, f, json.loads(tk.read_text())))
+    html_path.write_text(render(raw, days, f, json.loads(tk.read_text()), files))
     subprocess.run([CHROME, "--headless", "--disable-gpu", "--no-pdf-header-footer",
                     f"--print-to-pdf={pdf_path}", html_path.as_uri()], check=True, capture_output=True)
     takeaways = json.loads(tk.read_text())
-    (REPORTS / f"{name}-email.html").write_text(email_html(raw, f, takeaways))
+    (REPORTS / f"{name}-email.txt").write_text(email_text(raw, f, takeaways))
     pages = subprocess.run(["pdfinfo", str(pdf_path)], capture_output=True, text=True).stdout
     print(pdf_path)
-    print(REPORTS / f"{name}-email.html")
+    print(REPORTS / f"{name}-email.txt")
     print("subject: Campaign website report: " + f"{d(raw['week']['from']):%b %-d} – {d(raw['week']['to']):%b %-d}")
     print("pages:", re.search(r"Pages:\s+(\d+)", pages).group(1))
 
