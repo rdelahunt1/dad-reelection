@@ -63,3 +63,20 @@ a framework or backend.
 Names, election dates, phone numbers, addresses, and campaign finance
 disclaimers are legally and politically load-bearing on a real campaign site.
 Never infer or invent one — if a fact isn't already in the repo, ask Ryan.
+
+## Weekly traffic report (analytics/)
+
+- The Netlify dashboard shows only 7 days on the free plan, but the data feed
+  it calls (`/access-control/analytics-api/v2/<site-id>/...`, cookie-authenticated)
+  returns about 40 days. `analytics/fetch_netlify.js` runs inside a signed-in
+  browser pane; if the Netlify login expires, the routine alerts Ryan
+  instead of emailing David.
+- The PDF (~140 KB, embedded fonts) is too large to attach through the Gmail
+  connector, because the base64 would have to be copied through the model's context.
+  It is sent through Apple Mail (`send_report.applescript`, Ryan's Gmail account)
+  instead. A scripted Mail message wraps its body in a quote-style block.
+  Putting the attachment `after the last character of content` with a
+  visible window removed the `>` quoting from the plain-text version.
+- `build_report.py stats` fails with DATA CHECK FAILED when the daily or page
+  totals don't add up to the week total. That catches copying errors in the
+  saved JSON.
