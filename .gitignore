@@ -4,3 +4,7 @@ Pamphlet*.heic
 
 # macOS
 .DS_Store
+
+# Campaign traffic history and weekly PDFs. The repo is public; keep these local.
+analytics/data/
+analytics/reports/
