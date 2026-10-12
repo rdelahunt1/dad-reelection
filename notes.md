@@ -73,10 +73,18 @@ Never infer or invent one — if a fact isn't already in the repo, ask Ryan.
   instead of emailing David.
 - The PDF (~140 KB, embedded fonts) is too large to attach through the Gmail
   connector, because the base64 would have to be copied through the model's context.
-  It is sent through Apple Mail (`send_report.applescript`, Ryan's Gmail account)
-  instead. A scripted Mail message wraps its body in a quote-style block.
-  Putting the attachment `after the last character of content` with a
-  visible window removed the `>` quoting from the plain-text version.
+  It is sent through Gmail SMTP (`send_report.py`) with an app password stored
+  in the macOS Keychain (service `campaign-report-gmail`).
+- Apple Mail scripting (macOS 27) can't send it cleanly: any scripted message
+  with an attachment gets wrapped in a `blockquote type=cite`, so every line
+  shows as `> ` quoted. Tested 2026-10-11: content set at creation or later,
+  attachment at start/end/after a paragraph, visible or hidden, and a mailto:
+  compose window (not scriptable). Text-only scripted mail was clean. GUI
+  scripting ("Send Again") needs Accessibility access for osascript.
+- Everything is Central time: `fetch_netlify.js` computes CT day boundaries
+  with CT's current UTC offset, whatever time zone the Mac is in (it was in
+  Alaska time when this was set up). Captures before 2026-10-12 used the Mac's
+  local time; the 2026-10-12 capture rebased all retained days to CT.
 - `build_report.py stats` fails with DATA CHECK FAILED when the daily or page
   totals don't add up to the week total. That catches copying errors in the
   saved JSON.
